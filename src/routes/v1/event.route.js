@@ -6,14 +6,14 @@ const catchAsync = require('../../utils/catchAsync');
 
 const auth = require('../../middlewares/auth');
 
-const { ticketService, userService } = require('../../services');
+const { eventService, userService } = require('../../services');
 
 const router = express.Router();
 
 router.get('/all', async function (_, res) {
-  console.log('resres', await ticketService.getTickets());
+  console.log('resres', await eventService.getEvents());
 
-  res.status(httpStatus.CREATED).send(await ticketService.getTickets());
+  res.status(httpStatus.CREATED).send(await eventService.getEvents());
 });
 
 router.post(
@@ -26,7 +26,7 @@ router.post(
 
     console.log('user', user);
 
-    const ticket = await ticketService.createTicket({ ...req.body, creator: user._id });
+    const ticket = await eventService.createEvent({ ...req.body, creator: user._id });
 
     res.status(httpStatus.CREATED).send(ticket);
   })
@@ -43,7 +43,7 @@ router.post(
 
     if (!req.query.id) throw new ApiError(httpStatus.NOT_FOUND, 'ticket not found');
 
-    const ticket = await ticketService.updateTicketById(req.query.id, req.body);
+    const ticket = await eventService.updateEventById(req.query.id, req.body);
 
     res.status(httpStatus.CREATED).send(ticket);
   })

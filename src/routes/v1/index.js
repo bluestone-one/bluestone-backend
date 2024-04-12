@@ -3,7 +3,7 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
 const siweRoute = require('./siwe.route');
-const ticketRoute = require('./ticket.route');
+const eventRoute = require('./event.route');
 
 const config = require('../../config/config');
 
@@ -23,8 +23,8 @@ const defaultRoutes = [
     route: siweRoute,
   },
   {
-    path: '/ticket',
-    route: ticketRoute,
+    path: '/event',
+    route: eventRoute,
   },
 ];
 

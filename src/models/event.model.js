@@ -37,7 +37,7 @@ const { ticketTypes } = require('../config/tickets');
 // zoom_meeting_url: null
 // zoom_session_type: null
 
-const ticketSchema = mongoose.Schema(
+const eventSchema = mongoose.Schema(
   {
     creator: {
       type: mongoose.SchemaTypes.ObjectId,
@@ -54,11 +54,11 @@ const ticketSchema = mongoose.Schema(
     },
     startTime: {
       type: Date,
-      required: false,
+      required: true,
     },
     endTime: {
       type: Date,
-      required: false,
+      required: true,
     },
     timezone: {
       type: String,
@@ -89,11 +89,11 @@ const ticketSchema = mongoose.Schema(
 );
 
 // add plugin that converts mongoose to json
-ticketSchema.plugin(toJSONDate);
+eventSchema.plugin(toJSONDate);
 
 /**
  * @typedef Ticket
  */
-const Ticket = mongoose.model('Ticket', ticketSchema);
+const Ticket = mongoose.model('Ticket', eventSchema);
 
 module.exports = Ticket;
