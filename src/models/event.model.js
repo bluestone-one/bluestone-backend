@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { toJSONDate } = require('./plugins');
-const { ticketTypes } = require('../config/tickets');
+const { eventTypes } = require('../config/events');
 
 // allow_price_range: false
 // calendar_api_id: null
@@ -60,6 +60,10 @@ const eventSchema = mongoose.Schema(
       type: Date,
       required: true,
     },
+    coverImg: {
+      type: String,
+      required: false,
+    },
     timezone: {
       type: String,
     },
@@ -71,7 +75,7 @@ const eventSchema = mongoose.Schema(
     },
     type: {
       type: String,
-      enum: [ticketTypes.PRIVATE, ticketTypes.PUBLIC],
+      enum: [eventTypes.PRIVATE, eventTypes.PUBLIC],
       required: true,
     },
     // expires: {
@@ -92,8 +96,8 @@ const eventSchema = mongoose.Schema(
 eventSchema.plugin(toJSONDate);
 
 /**
- * @typedef Ticket
+ * @typedef Event
  */
-const Ticket = mongoose.model('Ticket', eventSchema);
+const Event = mongoose.model('Event', eventSchema);
 
-module.exports = Ticket;
+module.exports = Event;

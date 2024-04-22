@@ -13,8 +13,15 @@ const router = express.Router();
 router.get('/all', async function (_, res) {
   console.log('resres', await eventService.getEvents());
 
-  res.status(httpStatus.CREATED).send(await eventService.getEvents());
+  res.status(httpStatus.OK).send(await eventService.getEvents());
 });
+
+router.route('/:eventId').get(async function (req, res) {
+  if (req?.params?.eventId === undefined) throw new ApiError(httpStatus.NOT_FOUND, 'Event not found');
+  res.status(httpStatus.OK).send(await eventService.getEventById(req.params.eventId));
+});
+// .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
+// .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
 router.post(
   '/create',
