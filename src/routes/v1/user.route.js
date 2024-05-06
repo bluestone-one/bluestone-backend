@@ -1,8 +1,17 @@
 const express = require('express');
+
+const httpStatus = require('http-status');
+
 const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
 const userValidation = require('../../validations/user.validation');
 const userController = require('../../controllers/user.controller');
+
+// const { eventService, userService, tokenService } = require('../../services');
+
+const catchAsync = require('../../utils/catchAsync');
+
+// const ApiError = require('../../utils/ApiError');
 
 const router = express.Router();
 
@@ -10,6 +19,18 @@ router
   .route('/')
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
+
+router.route('/me').get(
+  auth(),
+  validate(userValidation.getUser),
+  catchAsync(async function (req, res) {
+    if (!req.headers.authorization) {
+      return res.status(403).json({ error: 'No credentials sent!' });
+    }
+
+    res.status(httpStatus.OK).send(true);
+  })
+);
 
 router
   .route('/:userId')
