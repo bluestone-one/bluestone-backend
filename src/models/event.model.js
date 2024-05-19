@@ -78,6 +78,9 @@ const eventSchema = mongoose.Schema(
       enum: [eventTypes.PRIVATE, eventTypes.PUBLIC],
       required: true,
     },
+    cohost: {
+      type: Array,
+    },
     // expires: {
     //   type: Date,
     //   required: true,
